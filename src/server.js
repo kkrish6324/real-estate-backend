@@ -54,6 +54,28 @@ app.get("/api/health", (_req, res) => {
   res.status(200).json({ ok: true, message: "Backend running" });
 });
 
+// Compatibility endpoints for frontend sections that can fall back to static UI content.
+app.get("/api/properties", (_req, res) => res.status(200).json([]));
+app.get("/api/agents", (_req, res) => res.status(200).json([]));
+app.get("/api/blogs", (_req, res) => res.status(200).json([]));
+app.get("/api/testimonials", (_req, res) => res.status(200).json([]));
+app.get("/api/stats", (_req, res) => res.status(200).json([]));
+app.get("/api/categories", (_req, res) => res.status(200).json([]));
+app.get("/api/hero-slides", (_req, res) => res.status(200).json([]));
+app.get("/api/settings", (_req, res) =>
+  res.status(200).json({
+    siteName: "BuilderFlooor",
+    aboutText:
+      "With over a decade of expertise in India's premium real estate market, BuilderFlooor helps clients find homes that match their aspirations.",
+  }),
+);
+
+// Frontend admin context probes /api/auth/me on boot; return unauthorized instead of 404.
+app.get("/api/auth/me", (_req, res) => res.status(401).json({ message: "Unauthorized" }));
+app.post("/api/auth/refresh", (_req, res) =>
+  res.status(401).json({ message: "No admin session available" }),
+);
+
 app.use("/api/users", userRoutes);
 app.use("/api/inquiries", inquiryRoutes);
 

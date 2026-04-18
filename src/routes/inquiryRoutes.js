@@ -6,6 +6,8 @@ import {
 
 const router = express.Router();
 
+// Frontend submits to /api/inquiries; keep /submit for backward compatibility.
+router.post("/", submitInquiry);
 router.post("/submit", submitInquiry);
 router.get("/", getAllInquiries);
 
